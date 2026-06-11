@@ -1,0 +1,50 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+html,
+body {
+  background-color: #110c1d;
+  color: #fffefe;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  /* subtle warm radial glow, africaine-contemporaine */
+  background-image:
+    radial-gradient(circle at 18% -10%, rgba(227, 138, 33, 0.14), transparent 42%),
+    radial-gradient(circle at 90% 8%, rgba(62, 19, 37, 0.55), transparent 48%);
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+
+@layer components {
+  .card {
+    @apply rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur-sm;
+  }
+  .btn-primary {
+    @apply inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full bg-ember px-6 text-base font-semibold text-night transition active:scale-[0.98] disabled:opacity-50;
+  }
+  .btn-ghost {
+    @apply inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full border border-white/15 px-5 text-sm font-medium text-cream/90 transition active:scale-[0.98];
+  }
+  .field {
+    @apply min-h-[48px] w-full rounded-xl border border-white/10 bg-night/60 px-4 py-3 text-base text-cream placeholder:text-cream/30 outline-none focus:border-ember/70 focus:ring-1 focus:ring-ember/40;
+  }
+  .label {
+    @apply mb-1.5 block text-sm font-medium text-cream/80;
+  }
+}
+
+/* hide scrollbar on horizontal scroll rows */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
