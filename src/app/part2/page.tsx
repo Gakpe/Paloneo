@@ -4,17 +4,23 @@ import Link from "next/link";
 import { AppShell } from "@/components/AppShell";
 import { Wall } from "@/components/Wall";
 
-// Placeholders — replace with the real links.
-const RESOURCES = [
+type Resource = {
+  title: string;
+  subtitle: string;
+  href?: string;
+  live?: boolean;
+};
+
+const RESOURCES: Resource[] = [
   {
     title: "Tribune Africa Forward — Minah",
-    subtitle: "Building tomorrow's African financing rails",
-    href: "#",
+    subtitle: "Read the op-ed · PDF",
+    href: "/africa-forward-minah.pdf",
   },
   {
     title: "Assessment Model for Africa",
-    subtitle: "Gosia Brzezinska · Eastrise Group",
-    href: "#",
+    subtitle: "Presented live by Gosia · Eastrise Group",
+    live: true,
   },
 ];
 
@@ -27,25 +33,45 @@ export default function Part2() {
       <p className="mb-4 text-sm text-cream/70">Let&apos;s get operational.</p>
 
       <div className="mb-5 grid grid-cols-1 gap-3 sm:grid-cols-2">
-        {RESOURCES.map((r) => (
-          <a
-            key={r.title}
-            href={r.href}
-            target="_blank"
-            rel="noreferrer"
-            className="card flex items-center gap-3 p-3.5 active:scale-[0.99]"
-          >
-            <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-ember/15 text-ember">
-              ↗
-            </span>
-            <div className="min-w-0">
-              <p className="truncate text-sm font-medium text-cream">
-                {r.title}
-              </p>
-              <p className="truncate text-xs text-cream/50">{r.subtitle}</p>
+        {RESOURCES.map((r) =>
+          r.live ? (
+            <div
+              key={r.title}
+              className="card flex items-center gap-3 p-3.5"
+            >
+              <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-ember/15 text-ember">
+                ●
+              </span>
+              <div className="min-w-0 flex-1">
+                <p className="truncate text-sm font-medium text-cream">
+                  {r.title}
+                </p>
+                <p className="truncate text-xs text-cream/50">{r.subtitle}</p>
+              </div>
+              <span className="shrink-0 rounded-full bg-ember/15 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-ember">
+                Live
+              </span>
             </div>
-          </a>
-        ))}
+          ) : (
+            <a
+              key={r.title}
+              href={r.href}
+              target="_blank"
+              rel="noreferrer"
+              className="card flex items-center gap-3 p-3.5 active:scale-[0.99]"
+            >
+              <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-ember/15 text-ember">
+                ↗
+              </span>
+              <div className="min-w-0">
+                <p className="truncate text-sm font-medium text-cream">
+                  {r.title}
+                </p>
+                <p className="truncate text-xs text-cream/50">{r.subtitle}</p>
+              </div>
+            </a>
+          )
+        )}
       </div>
 
       <Wall
