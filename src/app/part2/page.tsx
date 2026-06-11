@@ -4,10 +4,10 @@ import Link from "next/link";
 import { AppShell } from "@/components/AppShell";
 import { Wall } from "@/components/Wall";
 
-// Placeholders — à remplacer par les vrais liens.
+// Placeholders — replace with the real links.
 const RESOURCES = [
   {
-    title: "La tribune de Julien",
+    title: "Tribune Africa Forward — Minah",
     subtitle: "Building tomorrow's African financing rails",
     href: "#",
   },
@@ -20,11 +20,11 @@ const RESOURCES = [
 
 export default function Part2() {
   return (
-    <AppShell title="Partie 2 · Build Together">
+    <AppShell title="Part 2 · Build Together">
       <h1 className="mb-1 font-serif text-2xl text-cream">
         How Do We Build Together?
       </h1>
-      <p className="mb-4 text-sm text-cream/70">Passons à l&apos;opérationnel.</p>
+      <p className="mb-4 text-sm text-cream/70">Let&apos;s get operational.</p>
 
       <div className="mb-5 grid grid-cols-1 gap-3 sm:grid-cols-2">
         {RESOURCES.map((r) => (
@@ -50,11 +50,11 @@ export default function Part2() {
 
       <Wall
         part={2}
-        prompt="À quoi ressemble la renaissance des relations Afrique-Europe selon vous ? Comment passe-t-on à l'opérationnel ?"
+        prompt="What does the renaissance of Africa–Europe relations look like to you? How do we make it operational?"
       />
 
       <Link href="/whats-next" className="btn-primary mt-8 w-full text-base">
-        Conclure · What&apos;s Next →
+        Wrap up · What&apos;s Next →
       </Link>
     </AppShell>
   );

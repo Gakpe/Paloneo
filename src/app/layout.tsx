@@ -17,7 +17,7 @@ const sans = Inter({
 export const metadata: Metadata = {
   title: "Africa Circle · Renaissance Summit",
   description:
-    "Africa Circle — un atelier live du Renaissance Summit, hosted by Minah & Eastrise Group.",
+    "Africa Circle — a live workshop at the Renaissance Summit, hosted by Minah & Eastrise Group.",
 };
 
 export const viewport: Viewport = {
@@ -33,7 +33,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="fr" className={`${serif.variable} ${sans.variable}`}>
+    <html lang="en" className={`${serif.variable} ${sans.variable}`}>
       <body className="font-sans">{children}</body>
     </html>
   );

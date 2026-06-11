@@ -23,10 +23,12 @@ select {
 }
 
 body {
-  /* subtle warm radial glow, africaine-contemporaine */
+  /* warm radial glow + faint mudcloth diamond weave, africaine-contemporaine */
   background-image:
     radial-gradient(circle at 18% -10%, rgba(227, 138, 33, 0.14), transparent 42%),
-    radial-gradient(circle at 90% 8%, rgba(62, 19, 37, 0.55), transparent 48%);
+    radial-gradient(circle at 90% 8%, rgba(62, 19, 37, 0.55), transparent 48%),
+    repeating-linear-gradient(45deg, rgba(227, 138, 33, 0.035) 0 1px, transparent 1px 22px),
+    repeating-linear-gradient(-45deg, rgba(227, 138, 33, 0.035) 0 1px, transparent 1px 22px);
   background-attachment: fixed;
   min-height: 100vh;
 }
@@ -56,4 +58,37 @@ body {
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+/* ---- African motifs (pure CSS, no assets) ---------------------------- */
+
+/* Kente-inspired woven band: ember/marsala alternation with cream pinstripes */
+.kente-band {
+  height: 4px;
+  width: 100%;
+  background-image:
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 254, 254, 0.85) 0 2px,
+      transparent 2px 22px
+    ),
+    repeating-linear-gradient(90deg, #e38a21 0 22px, #3e1325 22px 44px);
+}
+
+/* Mudcloth zigzag rule — a slim triangular ribbon for section dividers */
+.kente-zigzag {
+  height: 9px;
+  width: 100%;
+  background:
+    linear-gradient(135deg, #e38a21 25%, transparent 25%) -10px 0 / 20px 20px,
+    linear-gradient(225deg, #e38a21 25%, transparent 25%) -10px 0 / 20px 20px;
+  background-repeat: repeat-x;
+  opacity: 0.55;
+}
+
+/* Stronger diamond weave for hero areas / feature cards */
+.african-weave {
+  background-image:
+    repeating-linear-gradient(45deg, rgba(227, 138, 33, 0.07) 0 1px, transparent 1px 16px),
+    repeating-linear-gradient(-45deg, rgba(227, 138, 33, 0.07) 0 1px, transparent 1px 16px);
 }

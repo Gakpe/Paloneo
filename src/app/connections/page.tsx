@@ -90,10 +90,10 @@ export default function Connections() {
   const list = tab === "received" ? received : sent;
 
   return (
-    <AppShell title="Mes connexions">
-      <h1 className="mb-1 font-serif text-2xl text-cream">Mes connexions</h1>
+    <AppShell title="My Connections">
+      <h1 className="mb-1 font-serif text-2xl text-cream">My Connections</h1>
       <p className="mb-4 text-sm text-cream/70">
-        Vos échanges privés avec le cercle.
+        Your private exchanges within the circle.
       </p>
 
       {!supabase && <ConfigNotice />}
@@ -105,7 +105,7 @@ export default function Connections() {
             tab === "received" ? "bg-ember text-night" : "bg-night/40 text-cream/70"
           }`}
         >
-          Reçues ({received.length})
+          Received ({received.length})
         </button>
         <button
           onClick={() => setTab("sent")}
@@ -113,7 +113,7 @@ export default function Connections() {
             tab === "sent" ? "bg-ember text-night" : "bg-night/40 text-cream/70"
           }`}
         >
-          Envoyées ({sent.length})
+          Sent ({sent.length})
         </button>
       </div>
 
@@ -121,8 +121,8 @@ export default function Connections() {
         {list.length === 0 && (
           <p className="py-10 text-center text-sm text-cream/40">
             {tab === "received"
-              ? "Aucune connexion reçue pour l'instant."
-              : "Vous n'avez pas encore envoyé de connexion."}
+              ? "No connections received yet."
+              : "You haven't sent any connections yet."}
           </p>
         )}
         {list.map((c) => {

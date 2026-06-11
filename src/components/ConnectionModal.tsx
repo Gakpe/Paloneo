@@ -24,7 +24,7 @@ export function ConnectionModal({
     if (sending) return; // guard against a double-tap on slow networks
     const supabase = getSupabase();
     if (!supabase) {
-      setError("Supabase non configuré.");
+      setError("Supabase not configured.");
       return;
     }
     setSending(true);
@@ -53,10 +53,10 @@ export function ConnectionModal({
         onClick={(e) => e.stopPropagation()}
       >
         <p className="font-serif text-xl text-cream">
-          Se connecter à {target.name}
+          Connect with {target.name}
         </p>
         <p className="mt-1 text-sm text-cream/60">
-          Message privé — visible uniquement par vous deux.
+          Private message — visible only to the two of you.
         </p>
 
         <div className="mt-4 space-y-2">
@@ -78,7 +78,7 @@ export function ConnectionModal({
 
         <textarea
           className="field mt-3 min-h-[88px] resize-none"
-          placeholder="Un mot (optionnel)…"
+          placeholder="A note (optional)…"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           maxLength={400}
@@ -92,7 +92,7 @@ export function ConnectionModal({
             className="btn-ghost flex-1"
             onClick={() => onClose(false)}
           >
-            Annuler
+            Cancel
           </button>
           <button
             type="button"
@@ -100,7 +100,7 @@ export function ConnectionModal({
             onClick={send}
             disabled={sending}
           >
-            {sending ? "Envoi…" : "Envoyer"}
+            {sending ? "Sending…" : "Send"}
           </button>
         </div>
       </div>

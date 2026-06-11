@@ -60,17 +60,17 @@ export default function Group() {
   const total = people.length || 1;
 
   return (
-    <AppShell title="Le Groupe">
-      <h1 className="mb-1 font-serif text-2xl text-cream">Le Groupe</h1>
+    <AppShell title="The Group">
+      <h1 className="mb-1 font-serif text-2xl text-cream">The Group</h1>
       <p className="mb-4 text-sm text-cream/70">
-        {people.length} participant{people.length > 1 ? "s" : ""} dans le cercle.
+        {people.length} participant{people.length > 1 ? "s" : ""} in the circle.
       </p>
 
       {!supabase && <ConfigNotice />}
 
       <div className="card mb-5 p-4">
         <p className="mb-3 text-[11px] font-semibold uppercase tracking-wider text-ember">
-          Familiarité avec l&apos;Afrique
+          Familiarity with Africa
         </p>
         <div className="space-y-2.5">
           {[1, 2, 3, 4].map((lvl) => {
@@ -104,7 +104,7 @@ export default function Group() {
                     {p.first_name} {p.last_name}{" "}
                     {isMine && (
                       <span className="ml-1 rounded bg-ember/20 px-1.5 py-0.5 text-[10px] text-ember">
-                        vous
+                        you
                       </span>
                     )}
                   </p>
@@ -122,7 +122,7 @@ export default function Group() {
                     }
                     className="btn-ghost shrink-0 px-3 text-xs"
                   >
-                    Se connecter
+                    Connect
                   </button>
                 )}
               </div>
@@ -137,7 +137,7 @@ export default function Group() {
           target={target}
           onClose={(sent) => {
             setTarget(null);
-            if (sent) setToast("Connexion envoyée ✓");
+            if (sent) setToast("Connection sent ✓");
           }}
         />
       )}

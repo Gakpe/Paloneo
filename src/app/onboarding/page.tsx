@@ -35,11 +35,11 @@ export default function Onboarding() {
 
   async function submit() {
     if (!valid) {
-      setError("Merci de remplir les champs requis.");
+      setError("Please fill in the required fields.");
       return;
     }
     if (!supabase) {
-      setError("Supabase non configuré.");
+      setError("Supabase not configured.");
       return;
     }
     setSubmitting(true);
@@ -59,13 +59,13 @@ export default function Onboarding() {
       .single();
     setSubmitting(false);
     if (error || !data) {
-      setError(error?.message ?? "Une erreur est survenue.");
+      setError(error?.message ?? "Something went wrong.");
       return;
     }
     const stored = storeParticipant(data as Participant);
     if (!stored) {
       setError(
-        "Impossible d'enregistrer votre session (navigation privée ?). Désactivez le mode privé puis réessayez."
+        "Couldn't save your session (private browsing?). Turn off private mode and try again."
       );
       return;
     }
@@ -74,11 +74,13 @@ export default function Onboarding() {
 
   return (
     <div className="min-h-screen pb-24">
-      <Header title="Bienvenue" />
+      <Header title="Welcome" />
       <main className="mx-auto max-w-md px-4 py-6">
-        <h1 className="font-serif text-2xl text-cream">Faisons connaissance</h1>
+        <h1 className="font-serif text-2xl text-cream">
+          Let&apos;s get to know each other
+        </h1>
         <p className="mt-1 text-sm text-cream/60">
-          Quelques infos pour rejoindre le cercle.
+          A few details to join the circle.
         </p>
 
         {!supabase && <ConfigNotice />}
@@ -86,7 +88,7 @@ export default function Onboarding() {
         <div className="mt-6 space-y-4">
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="label">Prénom *</label>
+              <label className="label">First name *</label>
               <input
                 className="field"
                 value={form.first_name}
@@ -94,7 +96,7 @@ export default function Onboarding() {
               />
             </div>
             <div>
-              <label className="label">Nom *</label>
+              <label className="label">Last name *</label>
               <input
                 className="field"
                 value={form.last_name}
@@ -104,7 +106,7 @@ export default function Onboarding() {
           </div>
 
           <div>
-            <label className="label">Poste / Organisation *</label>
+            <label className="label">Role / Organization *</label>
             <input
               className="field"
               placeholder="CEO @ Acme Capital"
@@ -114,10 +116,10 @@ export default function Onboarding() {
           </div>
 
           <div>
-            <label className="label">Domaine d&apos;expertise *</label>
+            <label className="label">Area of expertise *</label>
             <input
               className="field"
-              placeholder="Finance, impact, tech, juridique…"
+              placeholder="Finance, impact, tech, legal…"
               value={form.expertise}
               onChange={(e) => set("expertise", e.target.value)}
             />
@@ -135,7 +137,7 @@ export default function Onboarding() {
               />
             </div>
             <div>
-              <label className="label">Téléphone</label>
+              <label className="label">Phone</label>
               <input
                 className="field"
                 type="tel"
@@ -147,9 +149,7 @@ export default function Onboarding() {
           </div>
 
           <div>
-            <label className="label">
-              Votre familiarité avec l&apos;Afrique *
-            </label>
+            <label className="label">Your familiarity with Africa *</label>
             <div className="space-y-2">
               {[1, 2, 3, 4].map((lvl) => (
                 <button
@@ -176,12 +176,12 @@ export default function Onboarding() {
             onClick={submit}
             disabled={submitting}
           >
-            {submitting ? "Un instant…" : "Entrer dans le cercle →"}
+            {submitting ? "One moment…" : "Enter the circle →"}
           </button>
 
           <p className="text-xs leading-relaxed text-cream/40">
-            Vos coordonnées serviront uniquement à partager le bilan de la
-            session et assurer le suivi.
+            Your details will only be used to share the session summary and
+            follow up.
           </p>
         </div>
       </main>

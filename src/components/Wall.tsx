@@ -30,10 +30,10 @@ function setLiked(set: Set<string>) {
 function timeAgo(iso: string): string {
   const diff = Date.now() - new Date(iso).getTime();
   const m = Math.floor(diff / 60000);
-  if (m < 1) return "à l'instant";
-  if (m < 60) return `il y a ${m} min`;
+  if (m < 1) return "just now";
+  if (m < 60) return `${m} min ago`;
   const h = Math.floor(m / 60);
-  return `il y a ${h} h`;
+  return `${h} h ago`;
 }
 
 export function Wall({ part, prompt }: { part: number; prompt: string }) {
@@ -154,7 +154,7 @@ export function Wall({ part, prompt }: { part: number; prompt: string }) {
       <div className="card mt-4 p-3">
         <textarea
           className="field min-h-[80px] resize-none border-0 bg-transparent px-1 focus:ring-0"
-          placeholder="Partagez une idée, une question, une information…"
+          placeholder="Share an idea, a question, an insight…"
           value={content}
           onChange={(e) => setContent(e.target.value)}
           maxLength={600}
@@ -166,15 +166,23 @@ export function Wall({ part, prompt }: { part: number; prompt: string }) {
             onClick={submit}
             disabled={posting || !content.trim()}
           >
-            {posting ? "Envoi…" : "Publier"}
+            {posting ? "Posting…" : "Post"}
           </button>
         </div>
       </div>
 
-      <div className="mt-5 space-y-3">
+      <div className="mt-7 mb-3 flex items-center gap-3">
+        <h2 className="font-serif text-lg text-cream">All contributions</h2>
+        <span className="rounded-full bg-ember/15 px-2.5 py-0.5 text-xs font-medium text-ember">
+          {posts.length}
+        </span>
+        <div className="h-px flex-1 bg-white/10" />
+      </div>
+
+      <div className="space-y-3">
         {posts.length === 0 && (
           <p className="py-8 text-center text-sm text-cream/40">
-            Soyez le premier à contribuer ✨
+            Be the first to contribute ✨
           </p>
         )}
         {posts.map((post) => {
@@ -227,7 +235,7 @@ export function Wall({ part, prompt }: { part: number; prompt: string }) {
                     }
                     className="inline-flex min-h-[44px] items-center gap-1 rounded-full border border-white/10 px-4 text-sm text-cream/70 active:scale-95"
                   >
-                    Se connecter
+                    Connect
                   </button>
                 )}
               </div>
@@ -242,7 +250,7 @@ export function Wall({ part, prompt }: { part: number; prompt: string }) {
           target={target}
           onClose={(sent) => {
             setTarget(null);
-            if (sent) setToast("Connexion envoyée ✓");
+            if (sent) setToast("Connection sent ✓");
           }}
         />
       )}
@@ -254,7 +262,7 @@ export function Wall({ part, prompt }: { part: number; prompt: string }) {
 
 function PromptBox({ prompt }: { prompt: string }) {
   return (
-    <div className="rounded-2xl border border-ember/30 bg-marsala/40 p-4">
+    <div className="african-weave overflow-hidden rounded-2xl border border-ember/30 bg-marsala/40 p-4">
       <p className="text-[11px] font-semibold uppercase tracking-wider text-ember">
         Focus
       </p>

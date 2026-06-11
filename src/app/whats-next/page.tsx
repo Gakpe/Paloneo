@@ -5,13 +5,14 @@ import { AppShell } from "@/components/AppShell";
 import { ConfigNotice } from "@/components/ConfigNotice";
 import { getSupabase } from "@/lib/supabase";
 import { useParticipant } from "@/lib/participant";
+import { Pineapple } from "@/components/Pineapple";
 
 const CONTRIB_OPTIONS = [
-  { key: "time", label: "Du temps" },
+  { key: "time", label: "Time" },
   { key: "expertise", label: "Expertise / Knowledge" },
-  { key: "funding", label: "Soutien financier" },
-  { key: "network", label: "Mise en réseau" },
-  { key: "other", label: "Autre" },
+  { key: "funding", label: "Financial support" },
+  { key: "network", label: "Networking" },
+  { key: "other", label: "Other" },
 ];
 
 export default function WhatsNext() {
@@ -29,11 +30,11 @@ export default function WhatsNext() {
 
   async function submit() {
     if (!wants) {
-      setError("Merci de répondre à la première question.");
+      setError("Please answer the first question.");
       return;
     }
     if (!supabase || !participant) {
-      setError("Supabase non configuré.");
+      setError("Supabase not configured.");
       return;
     }
     setSubmitting(true);
@@ -54,13 +55,16 @@ export default function WhatsNext() {
 
   if (done) {
     return (
-      <AppShell title="Merci">
+      <AppShell title="Thank you">
         <div className="flex min-h-[60vh] flex-col items-center justify-center text-center animate-fade-up">
-          <div className="text-5xl">🍍</div>
-          <h1 className="mt-4 font-serif text-3xl text-cream">Merci !</h1>
+          <div className="relative">
+            <div className="absolute inset-0 -z-10 rounded-full bg-ember/20 blur-2xl" />
+            <Pineapple className="h-24 w-24" />
+          </div>
+          <h1 className="mt-5 font-serif text-3xl text-cream">Thank you!</h1>
           <p className="mt-3 max-w-xs text-sm leading-relaxed text-cream/65">
-            Votre contribution rejoint la renaissance africaine avec Paloneo.
-            Nous reviendrons vers vous avec le bilan de la session.
+            Your contribution joins the African renaissance with Paloneo. We&apos;ll
+            get back to you with the session summary.
           </p>
         </div>
       </AppShell>
@@ -70,20 +74,20 @@ export default function WhatsNext() {
   return (
     <AppShell title="What's Next">
       <h1 className="mb-1 font-serif text-2xl text-cream">What&apos;s Next</h1>
-      <p className="mb-5 text-sm text-cream/70">Quelques mots pour la suite.</p>
+      <p className="mb-5 text-sm text-cream/70">A few words on what comes next.</p>
 
       {!supabase && <ConfigNotice />}
 
       <div className="space-y-6">
         <div>
           <p className="label">
-            Souhaitez-vous contribuer à la renaissance africaine avec Paloneo ?
+            Would you like to contribute to the African renaissance with Paloneo?
           </p>
           <div className="grid grid-cols-3 gap-2">
             {[
-              { k: "yes", l: "Oui" },
-              { k: "maybe", l: "Peut-être" },
-              { k: "no", l: "Non" },
+              { k: "yes", l: "Yes" },
+              { k: "maybe", l: "Maybe" },
+              { k: "no", l: "No" },
             ].map((o) => (
               <button
                 key={o.k}
@@ -101,7 +105,7 @@ export default function WhatsNext() {
         </div>
 
         <div>
-          <p className="label">Sous quelle forme ?</p>
+          <p className="label">In what form?</p>
           <div className="flex flex-wrap gap-2">
             {CONTRIB_OPTIONS.map((o) => (
               <button
@@ -120,10 +124,10 @@ export default function WhatsNext() {
         </div>
 
         <div>
-          <label className="label">Quel type d&apos;expertise ?</label>
+          <label className="label">What kind of expertise?</label>
           <textarea
             className="field min-h-[88px] resize-none"
-            placeholder="Décrivez ce que vous pourriez apporter…"
+            placeholder="Describe what you could bring…"
             value={detail}
             onChange={(e) => setDetail(e.target.value)}
             maxLength={500}
@@ -137,7 +141,7 @@ export default function WhatsNext() {
           onClick={submit}
           disabled={submitting}
         >
-          {submitting ? "Envoi…" : "Envoyer ma contribution"}
+          {submitting ? "Sending…" : "Send my contribution"}
         </button>
       </div>
     </AppShell>

@@ -15,26 +15,34 @@ export default function Landing() {
   }, []);
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center px-6 text-center">
-      <div className="animate-fade-in">
-        <Pineapple className="mx-auto h-14 w-14" />
+    <main className="relative flex min-h-screen flex-col items-center justify-center px-6 text-center">
+      <div className="african-weave pointer-events-none absolute inset-0 opacity-60" />
+
+      <div className="relative animate-fade-in">
+        <div className="absolute inset-0 -z-10 rounded-full bg-ember/20 blur-2xl" />
+        <Pineapple className="mx-auto h-28 w-28 drop-shadow-[0_6px_24px_rgba(227,138,33,0.25)]" />
       </div>
 
-      <h1 className="mt-6 font-serif text-4xl leading-tight text-cream animate-fade-up sm:text-5xl">
+      <h1 className="relative mt-6 font-serif text-4xl leading-tight text-cream animate-fade-up sm:text-5xl">
         Welcome to the
         <br />
         <span className="text-ember">Africa Circle</span>
       </h1>
 
+      <div
+        className="kente-band relative mx-auto mt-5 w-28 rounded-full animate-fade-up"
+        style={{ animationDelay: "0.05s" }}
+      />
+
       <p
-        className="mt-4 max-w-sm text-sm leading-relaxed text-cream/65 animate-fade-up"
+        className="relative mt-4 max-w-sm text-sm leading-relaxed text-cream/65 animate-fade-up"
         style={{ animationDelay: "0.1s" }}
       >
         Renaissance Summit · Hosted by Minah &amp; Eastrise Group
       </p>
 
       <div
-        className="mt-10 w-full max-w-xs animate-fade-up"
+        className="relative mt-10 w-full max-w-xs animate-fade-up"
         style={{ animationDelay: "0.2s" }}
       >
         {returning ? (
@@ -42,11 +50,11 @@ export default function Landing() {
             className="btn-primary w-full"
             onClick={() => router.push("/part1")}
           >
-            Reprendre la session →
+            Resume session →
           </button>
         ) : (
           <Link href="/onboarding" className="btn-primary w-full">
-            Commencer
+            Get started
           </Link>
         )}
         {returning && (
@@ -54,13 +62,13 @@ export default function Landing() {
             href="/onboarding"
             className="mt-3 block text-xs text-cream/40 underline"
           >
-            Ce n&apos;est pas vous ? Recommencer
+            Not you? Start over
           </Link>
         )}
       </div>
 
-      <p className="mt-16 flex items-center gap-1.5 text-xs text-cream/30">
-        <span>🍍</span> Paloneo · renaissancesummit.org
+      <p className="relative mt-16 flex items-center gap-1.5 text-xs text-cream/30">
+        <Pineapple className="h-4 w-4" /> Paloneo · renaissancesummit.org
       </p>
     </main>
   );

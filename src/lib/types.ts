@@ -43,13 +43,13 @@ export type WhatsNext = {
 };
 
 export const FAMILIARITY_LABELS: Record<number, string> = {
-  1: "Jamais travaillé avec l'Afrique",
-  2: "Curieux · exploratoire",
-  3: "Déjà actif sur le continent",
-  4: "Très expérimenté",
+  1: "Never worked with Africa",
+  2: "Curious · exploring",
+  3: "Already active on the continent",
+  4: "Highly experienced",
 };
 
 export const INTENT_LABELS: Record<string, string> = {
-  talk_after: "J'aimerais en parler avec toi après",
-  collab_idea: "J'ai une idée de collaboration",
+  talk_after: "I'd love to talk with you afterwards",
+  collab_idea: "I have a collaboration idea",
 };
