@@ -27,6 +27,13 @@ const RESOURCES: Resource[] = [
 export default function Part2() {
   return (
     <AppShell title="Part 2 · Build Together">
+      <Link
+        href="/part1"
+        className="mb-3 inline-flex items-center gap-1.5 text-sm text-cream/60 transition active:scale-95 hover:text-ember"
+      >
+        ← Back to Part 1
+      </Link>
+
       <h1 className="mb-1 font-serif text-2xl text-cream">
         How Do We Build Together?
       </h1>
