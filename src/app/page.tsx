@@ -67,7 +67,29 @@ export default function Landing() {
         )}
       </div>
 
-      <p className="relative mt-16 flex items-center gap-1.5 text-xs text-cream/30">
+      <div className="relative mt-14 flex flex-col items-center gap-4 animate-fade-up">
+        <p className="text-[10px] uppercase tracking-[0.25em] text-cream/40">
+          Hosted by
+        </p>
+        <div className="flex items-center justify-center gap-5">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/logo-minah.png"
+            alt="Minah"
+            className="h-6 w-auto object-contain"
+          />
+          <span className="h-8 w-px bg-white/15" />
+          {/* Eastrise mark is white-on-black; screen blend drops the black bg. */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/logo-eastrise.jpg"
+            alt="Eastrise"
+            className="h-14 w-14 object-contain mix-blend-screen"
+          />
+        </div>
+      </div>
+
+      <p className="relative mt-8 flex items-center gap-1.5 text-xs text-cream/30">
         <Pineapple className="h-4 w-4" /> Paloneo · renaissancesummit.org
       </p>
     </main>
