@@ -70,7 +70,7 @@ export default function WhatsNext() {
   return (
     <AppShell title="What's Next">
       <h1 className="mb-1 font-serif text-2xl text-cream">What&apos;s Next</h1>
-      <p className="mb-5 text-sm text-cream/55">Quelques mots pour la suite.</p>
+      <p className="mb-5 text-sm text-cream/70">Quelques mots pour la suite.</p>
 
       {!supabase && <ConfigNotice />}
 

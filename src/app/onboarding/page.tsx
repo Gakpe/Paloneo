@@ -62,12 +62,18 @@ export default function Onboarding() {
       setError(error?.message ?? "Une erreur est survenue.");
       return;
     }
-    storeParticipant(data as Participant);
+    const stored = storeParticipant(data as Participant);
+    if (!stored) {
+      setError(
+        "Impossible d'enregistrer votre session (navigation privée ?). Désactivez le mode privé puis réessayez."
+      );
+      return;
+    }
     router.push("/part1");
   }
 
   return (
-    <div className="min-h-screen pb-10">
+    <div className="min-h-screen pb-24">
       <Header title="Bienvenue" />
       <main className="mx-auto max-w-md px-4 py-6">
         <h1 className="font-serif text-2xl text-cream">Faisons connaissance</h1>

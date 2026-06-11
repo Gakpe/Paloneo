@@ -11,6 +11,15 @@ body {
   background-color: #110c1d;
   color: #fffefe;
   -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%; /* stop iOS Safari zooming on input focus */
+  text-size-adjust: 100%;
+}
+
+/* Keep form controls at >=16px so iOS never zooms the viewport on focus. */
+input,
+textarea,
+select {
+  font-size: 16px;
 }
 
 body {
@@ -27,10 +36,10 @@ body {
     @apply rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur-sm;
   }
   .btn-primary {
-    @apply inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full bg-ember px-6 text-base font-semibold text-night transition active:scale-[0.98] disabled:opacity-50;
+    @apply inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full bg-ember px-6 text-base font-semibold text-night transition active:scale-95 active:opacity-90 disabled:opacity-50;
   }
   .btn-ghost {
-    @apply inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full border border-white/15 px-5 text-sm font-medium text-cream/90 transition active:scale-[0.98];
+    @apply inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full border border-white/15 px-5 text-sm font-medium text-cream/90 transition active:scale-95 active:bg-white/10;
   }
   .field {
     @apply min-h-[48px] w-full rounded-xl border border-white/10 bg-night/60 px-4 py-3 text-base text-cream placeholder:text-cream/30 outline-none focus:border-ember/70 focus:ring-1 focus:ring-ember/40;

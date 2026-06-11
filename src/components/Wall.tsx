@@ -6,6 +6,7 @@ import { useParticipant } from "@/lib/participant";
 import type { Participant, Post } from "@/lib/types";
 import { ConfigNotice } from "./ConfigNotice";
 import { ConnectionModal, type ConnectionTarget } from "./ConnectionModal";
+import { Toast } from "./Toast";
 
 const LIKES_KEY = "ac_liked_posts";
 
@@ -19,7 +20,11 @@ function getLiked(): Set<string> {
 }
 
 function setLiked(set: Set<string>) {
-  localStorage.setItem(LIKES_KEY, JSON.stringify([...set]));
+  try {
+    localStorage.setItem(LIKES_KEY, JSON.stringify([...set]));
+  } catch {
+    /* storage unavailable (private mode) — likes still post to the server */
+  }
 }
 
 function timeAgo(iso: string): string {
@@ -40,6 +45,7 @@ export function Wall({ part, prompt }: { part: number; prompt: string }) {
   const [posting, setPosting] = useState(false);
   const [liked, setLikedState] = useState<Set<string>>(new Set());
   const [target, setTarget] = useState<ConnectionTarget | null>(null);
+  const [toast, setToast] = useState<string | null>(null);
 
   useEffect(() => setLikedState(getLiked()), []);
 
@@ -74,7 +80,17 @@ export function Wall({ part, prompt }: { part: number; prompt: string }) {
         { event: "*", schema: "public", table: "posts", filter: `part=eq.${part}` },
         () => loadPosts()
       )
-      .subscribe();
+      // Keep the author map fresh so late joiners' names resolve, not "Participant".
+      .on(
+        "postgres_changes",
+        { event: "INSERT", schema: "public", table: "participants" },
+        () => loadAuthors()
+      )
+      .subscribe((status) => {
+        if (status === "CHANNEL_ERROR" || status === "TIMED_OUT") {
+          console.error("Realtime (wall) subscription:", status);
+        }
+      });
     return () => {
       supabase.removeChannel(channel);
     };
@@ -105,10 +121,21 @@ export function Wall({ part, prompt }: { part: number; prompt: string }) {
     setPosts((prev) =>
       prev.map((p) => (p.id === post.id ? { ...p, likes: p.likes + 1 } : p))
     );
-    await supabase
-      .from("posts")
-      .update({ likes: post.likes + 1 })
-      .eq("id", post.id);
+    // Atomic server-side increment — avoids lost updates when several
+    // people like the same post at once. See increment_post_likes() in supabase.sql.
+    const { error } = await supabase.rpc("increment_post_likes", {
+      post_id: post.id,
+    });
+    if (error) {
+      // roll back the optimistic bump and allow a retry
+      setPosts((prev) =>
+        prev.map((p) => (p.id === post.id ? { ...p, likes: p.likes - 1 } : p))
+      );
+      const reverted = new Set(liked);
+      reverted.delete(post.id);
+      setLikedState(reverted);
+      setLiked(reverted);
+    }
   }
 
   if (!supabase) {
@@ -181,7 +208,7 @@ export function Wall({ part, prompt }: { part: number; prompt: string }) {
                 <button
                   onClick={() => like(post)}
                   disabled={liked.has(post.id)}
-                  className={`inline-flex min-h-[36px] items-center gap-1.5 rounded-full border px-3 text-sm transition ${
+                  className={`inline-flex min-h-[44px] items-center gap-1.5 rounded-full border px-4 text-sm transition ${
                     liked.has(post.id)
                       ? "border-ember/60 bg-ember/15 text-ember"
                       : "border-white/10 text-cream/70 active:scale-95"
@@ -198,7 +225,7 @@ export function Wall({ part, prompt }: { part: number; prompt: string }) {
                         name: author.first_name,
                       })
                     }
-                    className="inline-flex min-h-[36px] items-center gap-1 rounded-full border border-white/10 px-3 text-sm text-cream/70 active:scale-95"
+                    className="inline-flex min-h-[44px] items-center gap-1 rounded-full border border-white/10 px-4 text-sm text-cream/70 active:scale-95"
                   >
                     Se connecter
                   </button>
@@ -215,10 +242,12 @@ export function Wall({ part, prompt }: { part: number; prompt: string }) {
           target={target}
           onClose={(sent) => {
             setTarget(null);
-            if (sent) alert("Connexion envoyée ✓");
+            if (sent) setToast("Connexion envoyée ✓");
           }}
         />
       )}
+
+      {toast && <Toast message={toast} onDone={() => setToast(null)} />}
     </div>
   );
 }

@@ -8,7 +8,7 @@ export default function Part1() {
   return (
     <AppShell title="Partie 1 · Building Trust">
       <h1 className="mb-1 font-serif text-2xl text-cream">Building Trust</h1>
-      <p className="mb-4 text-sm text-cream/55">
+      <p className="mb-4 text-sm text-cream/70">
         Posez les bases de la confiance.
       </p>
 

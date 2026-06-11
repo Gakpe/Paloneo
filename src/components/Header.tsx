@@ -3,7 +3,7 @@ import { Pineapple } from "./Pineapple";
 
 export function Header({ title }: { title?: string }) {
   return (
-    <header className="sticky top-0 z-20 border-b border-white/10 bg-night/80 backdrop-blur-md">
+    <header className="sticky top-0 z-20 border-b border-white/10 bg-night/80 backdrop-blur-md pt-[env(safe-area-inset-top)]">
       <div className="mx-auto flex max-w-2xl items-center gap-2.5 px-4 py-3">
         <Link href="/" className="flex items-center gap-2">
           <Pineapple className="h-6 w-6 shrink-0" />

@@ -24,7 +24,7 @@ export default function Part2() {
       <h1 className="mb-1 font-serif text-2xl text-cream">
         How Do We Build Together?
       </h1>
-      <p className="mb-4 text-sm text-cream/55">Passons à l&apos;opérationnel.</p>
+      <p className="mb-4 text-sm text-cream/70">Passons à l&apos;opérationnel.</p>
 
       <div className="mb-5 grid grid-cols-1 gap-3 sm:grid-cols-2">
         {RESOURCES.map((r) => (

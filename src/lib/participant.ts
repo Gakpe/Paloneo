@@ -8,30 +8,47 @@ const CACHE_KEY = "ac_participant";
 
 export function getStoredParticipantId(): string | null {
   if (typeof window === "undefined") return null;
-  return window.localStorage.getItem(ID_KEY);
+  try {
+    return window.localStorage.getItem(ID_KEY);
+  } catch {
+    return null;
+  }
 }
 
 export function getCachedParticipant(): Participant | null {
   if (typeof window === "undefined") return null;
-  const raw = window.localStorage.getItem(CACHE_KEY);
-  if (!raw) return null;
   try {
+    const raw = window.localStorage.getItem(CACHE_KEY);
+    if (!raw) return null;
     return JSON.parse(raw) as Participant;
   } catch {
     return null;
   }
 }
 
-export function storeParticipant(p: Participant) {
-  if (typeof window === "undefined") return;
-  window.localStorage.setItem(ID_KEY, p.id);
-  window.localStorage.setItem(CACHE_KEY, JSON.stringify(p));
+/**
+ * Persists the participant. Returns false if storage is unavailable
+ * (e.g. Safari private mode throws on setItem) so callers can react.
+ */
+export function storeParticipant(p: Participant): boolean {
+  if (typeof window === "undefined") return false;
+  try {
+    window.localStorage.setItem(ID_KEY, p.id);
+    window.localStorage.setItem(CACHE_KEY, JSON.stringify(p));
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 export function clearParticipant() {
   if (typeof window === "undefined") return;
-  window.localStorage.removeItem(ID_KEY);
-  window.localStorage.removeItem(CACHE_KEY);
+  try {
+    window.localStorage.removeItem(ID_KEY);
+    window.localStorage.removeItem(CACHE_KEY);
+  } catch {
+    /* ignore */
+  }
 }
 
 /**

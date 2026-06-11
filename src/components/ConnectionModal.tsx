@@ -21,6 +21,7 @@ export function ConnectionModal({
   const [error, setError] = useState<string | null>(null);
 
   async function send() {
+    if (sending) return; // guard against a double-tap on slow networks
     const supabase = getSupabase();
     if (!supabase) {
       setError("Supabase non configuré.");

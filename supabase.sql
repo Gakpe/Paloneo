@@ -71,6 +71,18 @@ create policy "anon all connections" on connections
 create policy "anon all whats_next" on whats_next
   for all to anon using (true) with check (true);
 
+-- ---------- FUNCTIONS ----------
+-- Atomic like increment — avoids lost updates when several participants
+-- like the same post at once. Called from the app via supabase.rpc().
+create or replace function increment_post_likes(post_id uuid)
+returns void
+language sql
+as $$
+  update posts set likes = likes + 1 where id = post_id;
+$$;
+
+grant execute on function increment_post_likes(uuid) to anon;
+
 -- ---------- REALTIME ----------
 -- Enable realtime broadcasts on the live tables.
 alter publication supabase_realtime add table posts;

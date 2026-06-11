@@ -33,9 +33,9 @@ export function AppShell({
   }
 
   return (
-    <div className="min-h-screen pb-24">
+    <div className="min-h-screen">
       <Header title={title} />
-      <main className="mx-auto max-w-2xl px-4 py-5">{children}</main>
+      <main className="mx-auto max-w-2xl px-4 pt-5 pb-28">{children}</main>
       <BottomNav />
     </div>
   );

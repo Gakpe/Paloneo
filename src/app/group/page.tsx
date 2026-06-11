@@ -7,6 +7,7 @@ import {
   ConnectionModal,
   type ConnectionTarget,
 } from "@/components/ConnectionModal";
+import { Toast } from "@/components/Toast";
 import { getSupabase } from "@/lib/supabase";
 import { useParticipant } from "@/lib/participant";
 import { FAMILIARITY_LABELS, type Participant } from "@/lib/types";
@@ -16,6 +17,7 @@ export default function Group() {
   const { participant } = useParticipant();
   const [people, setPeople] = useState<Participant[]>([]);
   const [target, setTarget] = useState<ConnectionTarget | null>(null);
+  const [toast, setToast] = useState<string | null>(null);
 
   useEffect(() => {
     if (!supabase) return;
@@ -35,7 +37,11 @@ export default function Group() {
         { event: "*", schema: "public", table: "participants" },
         load
       )
-      .subscribe();
+      .subscribe((status) => {
+        if (status === "CHANNEL_ERROR" || status === "TIMED_OUT") {
+          console.error("Realtime (group) subscription:", status);
+        }
+      });
     return () => {
       active = false;
       supabase.removeChannel(channel);
@@ -56,7 +62,7 @@ export default function Group() {
   return (
     <AppShell title="Le Groupe">
       <h1 className="mb-1 font-serif text-2xl text-cream">Le Groupe</h1>
-      <p className="mb-4 text-sm text-cream/55">
+      <p className="mb-4 text-sm text-cream/70">
         {people.length} participant{people.length > 1 ? "s" : ""} dans le cercle.
       </p>
 
@@ -114,7 +120,7 @@ export default function Group() {
                     onClick={() =>
                       setTarget({ id: p.id, name: p.first_name })
                     }
-                    className="btn-ghost shrink-0 !min-h-[40px] px-3 text-xs"
+                    className="btn-ghost shrink-0 px-3 text-xs"
                   >
                     Se connecter
                   </button>
@@ -131,10 +137,12 @@ export default function Group() {
           target={target}
           onClose={(sent) => {
             setTarget(null);
-            if (sent) alert("Connexion envoyée ✓");
+            if (sent) setToast("Connexion envoyée ✓");
           }}
         />
       )}
+
+      {toast && <Toast message={toast} onDone={() => setToast(null)} />}
     </AppShell>
   );
 }
